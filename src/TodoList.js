@@ -33,7 +33,7 @@ export default class TodoList extends Component {
         }
     }
 
-    componentDidUpdate(nextProps, prevProps) {
+    componentWillUpdate(nextProps, prevProps) {
         console.log('todo list', nextProps.items)
         if (isSameItems(nextProps.items, prevProps.items)) {
             return;
