@@ -40,7 +40,7 @@ export default class TodoItem extends Component {
     }
 
     onSaveEdition(event) {
-        //debugger
+        debugger
 
         if (!isEnterKey(event)) {
             return;
