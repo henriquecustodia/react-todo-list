@@ -15,10 +15,12 @@ export default class TodoItem extends Component {
 
         this.enableEdition = this.enableEdition.bind(this);
         this.onSaveEdition = this.onSaveEdition.bind(this);
+        this.onChange = this.onChange.bind(this);
         this.onBlur = this.onBlur.bind(this);
         this.onDone = this.onDone.bind(this);
 
         this.state = {
+            title: '',
             isEditing: false,
             item: { ...props.item }
         };
@@ -38,7 +40,7 @@ export default class TodoItem extends Component {
     }
 
     onSaveEdition(event) {
-        debugger
+        //debugger
 
         if (!isEnterKey(event)) {
             return;
@@ -51,11 +53,18 @@ export default class TodoItem extends Component {
         }
 
         this.setState({
+            title,
             isEditing: false,
             item: { id: new Date().getTime(), title }
         });
 
         this.onItemEdit({ ...this.state.item });
+    }
+
+    onChange({ target }) {
+        this.setState({
+            title: target.value
+        });
     }
 
     onBlur() {
@@ -80,7 +89,7 @@ export default class TodoItem extends Component {
 
             return (
                 <span className={"todo-item-title"}>
-                    <input ref={this.inputRef} value={this.title} onKeyDown={this.onSaveEdition} onBlur={this.onBlur} />
+                    <input ref={this.inputRef} value={this.title} onKeyDown={this.onSaveEdition} onBlur={this.onBlur} onChange={this.onChange} />
                 </span>
             );
         })();
