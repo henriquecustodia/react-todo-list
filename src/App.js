@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TodoList from './TodoList';
 import TodoInput from './TodoInput';
+import Storage from './storage';
 
 import './App.css';
 
@@ -13,31 +14,33 @@ export default class App extends Component {
     this.onItemsChange = this.onItemsChange.bind(this);
 
     this.state = {
-      items: []
+      items: Storage.getItems() || []
     };
   }
 
   onSubmit(item) {
+    const items = [...this.state.items, item];
+    
+    Storage.setItems(items);
+    
     this.setState({
-      items: [...this.state.items, item]
+      items: items
     });
-
-    setTimeout(() => {
-      console.log('timeout', this.state.items);
-    }, 100)
   }
 
   onItemsChange(items) {
+
+    Storage.setItems(items);
+    
     this.setState({
       items: items
     });
   }
 
   render() {
-    console.log('render app', this.state.items);
-    
     return (
-      <div>
+      <div className="container">
+        <h1>Todo List Using React</h1>
         <TodoInput onSubmit={this.onSubmit}></TodoInput>
         <TodoList items={this.state.items} onItemsChange={this.onItemsChange}></TodoList>
       </div>

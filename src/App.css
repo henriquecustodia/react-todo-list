@@ -3,7 +3,15 @@
   max-width: 800px;
 }
 
+.container {
+  font-family: 'Roboto';
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .todo-list {
+  width: 100%;
   padding: 10px;
   border: 1px solid #333;
 }

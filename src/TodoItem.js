@@ -3,10 +3,6 @@ import { isEnterKey, noop } from './util';
 
 export default class TodoItem extends Component {
 
-    get title() {
-        return this.state.item.title;
-    }
-
     constructor(props) {
         super(props);
 
@@ -20,9 +16,9 @@ export default class TodoItem extends Component {
         this.onDone = this.onDone.bind(this);
 
         this.state = {
-            title: '',
             isEditing: false,
-            item: { ...props.item }
+            item: { ...props.item },
+            title: props.item.title,
         };
 
         this.inputRef = React.createRef();
@@ -34,31 +30,30 @@ export default class TodoItem extends Component {
         });
 
         setTimeout(() => {
-            debugger
             this.inputRef.current.focus();
         }, 25);
     }
 
     onSaveEdition(event) {
-        debugger
-
         if (!isEnterKey(event)) {
             return;
         }
 
-        const title = event.current.value;
+        const title = event.target.value;
 
         if (!title) {
             return;
         }
 
+        const mergedItem = { ...this.state.item, title }
+
         this.setState({
             title,
             isEditing: false,
-            item: { id: new Date().getTime(), title }
+            item: { ...mergedItem }
         });
 
-        this.onItemEdit({ ...this.state.item });
+        this.onItemEdit({ ...mergedItem });
     }
 
     onChange({ target }) {
@@ -81,23 +76,23 @@ export default class TodoItem extends Component {
         const titleElement = (() => {
             if (this.state.isEditing) {
                 return (
-                    <span className={"todo-item-title"} onClick={this.enableEdition}>
-                        {this.title}
+                    <span className="todo-item-title">
+                        <input ref={this.inputRef} value={this.state.title} onKeyDown={this.onSaveEdition} onBlur={this.onBlur} onChange={this.onChange} />
                     </span>
                 );
             }
 
             return (
-                <span className={"todo-item-title"}>
-                    <input ref={this.inputRef} value={this.title} onKeyDown={this.onSaveEdition} onBlur={this.onBlur} onChange={this.onChange} />
+                <span className="todo-item-title" onClick={this.enableEdition}>
+                    {this.state.title}
                 </span>
             );
         })();
 
         return (
-            <div className={"todo-item"}>
+            <div className="todo-item">
                 {titleElement}
-                <div className={"todo-item-action"}>
+                <div className="todo-item-action">
                     <button onClick={this.onDone} >Done</button>
                 </div>
             </div>

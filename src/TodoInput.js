@@ -31,6 +31,8 @@ export default class TodoInput extends Component {
             id: new Date().getTime(),
             title: this.state.text
         });
+
+        this._clearInput();
     }
 
     onChange({ target }) {
@@ -49,7 +51,7 @@ export default class TodoInput extends Component {
         return (
             <div className="todo-input">
                 <input type="text"
-                    placeholder="Adicione uma tarefa"
+                    placeholder="Add a Task"
                     value={this.state.text}
                     onChange={this.onChange}
                     onKeyDown={this.onEnter}

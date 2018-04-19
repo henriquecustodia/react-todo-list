@@ -26,20 +26,16 @@ export default class TodoList extends Component {
         this.onDone = this.onDone.bind(this);
         this.onItemEdit = this.onItemEdit.bind(this);
 
-        console.log('todo list constructor', props.items)
-
         this.state = {
             items: props.items ? [...props.items] : []
         }
     }
 
     componentWillUpdate(nextProps, prevProps) {
-        console.log('todo list', nextProps.items)
         if (isSameItems(nextProps.items, prevProps.items)) {
             return;
         }
 
-        console.log('componentDidUpdate', nextProps, prevProps)
         this.setState({
             items: [...nextProps.items]
         })
@@ -49,10 +45,6 @@ export default class TodoList extends Component {
         const includedItems = this.state.items.filter(_ => _.id !== item.id);
 
         this.onItemsChange(includedItems);
-
-        // this.setState({
-        //     items: includedItems
-        // });
     }
 
     onItemEdit(item) {
@@ -65,10 +57,6 @@ export default class TodoList extends Component {
         });
 
         this.onItemsChange(newItems);
-
-        // this.setState({
-        //     items: newItems
-        // });
     }
 
     render() {
@@ -82,7 +70,7 @@ export default class TodoList extends Component {
         ));
 
         return (
-            <div className={"todo-list"}>
+            <div className="todo-list">
                 {todoItems}
             </div>
         );
